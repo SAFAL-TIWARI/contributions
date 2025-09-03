@@ -14,18 +14,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Make Changes
+      - name: Configure Git
+        run: |
+          git config --global user.name "SAFAL-TIWARI"
+          git config --global user.email "safaltiwari602@gmail.com"
+
+      - name: Make Changes and Commit
         run: |
           echo "Commit $(date)" >> activity.log
           git add activity.log
           git commit -m "Automated commit $(date)"
 
-      - name: Commit and Push Changes
+      - name: Push Changes
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.name "SAFAL-TIWARI"
-          git config --global user.email "safaltiwari602@gmail.com"
-          git add .
-          git commit -m "Automated commit $(date)" || exit 0
           git push "https://${GH_PAT}@github.com/SAFAL-TIWARI/contributions.git" main
