@@ -15,21 +15,20 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
         run: |
-          git config --global user.name "SAFAL-TIWARI"
-          git config --global user.email "safaltiwari602@gmail.com"
+          git config --local user.name "SAFAL-TIWARI"
+          git config --local user.email "safaltiwari602@gmail.com"
 
       - name: Make Changes and Commit
         run: |
-          echo "Commit $(date)" >> activity.log
+          echo "Automated commit at $(date)" >> activity.log
           git add activity.log
-          git commit -m "Automated commit $(date)"
+          git commit -m "Automated commit at $(date)" || exit 0
 
       - name: Push Changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/SAFAL-TIWARI/contributions.git
-          git push origin main
+          git push
