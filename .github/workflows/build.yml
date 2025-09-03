@@ -27,6 +27,7 @@ jobs:
 
       - name: Push Changes
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          git push "https://${GH_PAT}@github.com/SAFAL-TIWARI/contributions.git" main
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/SAFAL-TIWARI/contributions.git
+          git push origin main
